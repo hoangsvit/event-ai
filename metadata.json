@@ -1,0 +1,6 @@
+{
+  "name": "Event Data Hub AI",
+  "description": "Turn fragmented event data across Google Sheets into actionable intelligence with Gemini schema normalization and grounded AI queries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
