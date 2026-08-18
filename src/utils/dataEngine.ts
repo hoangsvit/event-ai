@@ -400,7 +400,7 @@ export function generateCalculatedAIInsights(
 }
 
 /**
- * Parses simple CSV string into raw rows object array.
+ * Parses CSV or TSV string into raw rows object array with delimiter auto-detection.
  */
 export function parseCSVToRawRows(csvText: string): { columns: string[]; rows: RawRow[] } {
   const lines = csvText
@@ -412,8 +412,17 @@ export function parseCSVToRawRows(csvText: string): { columns: string[]; rows: R
     return { columns: [], rows: [] };
   }
 
+  // Detect delimiter from first line (e.g. Tab-separated from Excel/Sheets, Semicolon, or Comma)
+  const firstLine = lines[0];
+  let delimiter = ',';
+  if (firstLine.includes('\t') && !firstLine.includes(',')) {
+    delimiter = '\t';
+  } else if (firstLine.includes(';') && !firstLine.includes(',')) {
+    delimiter = ';';
+  }
+
   // Helper to split CSV line taking quotes into account
-  const splitLine = (line: string): string[] => {
+  const splitLine = (line: string, delim = delimiter): string[] => {
     const result: string[] = [];
     let cur = '';
     let inQuotes = false;
@@ -421,7 +430,7 @@ export function parseCSVToRawRows(csvText: string): { columns: string[]; rows: R
       const char = line[i];
       if (char === '"') {
         inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
+      } else if (char === delim && !inQuotes) {
         result.push(cur.trim().replace(/^"|"$/g, ''));
         cur = '';
       } else {
@@ -432,16 +441,28 @@ export function parseCSVToRawRows(csvText: string): { columns: string[]; rows: R
     return result;
   };
 
-  const columns = splitLine(lines[0]);
+  const rawColumns = splitLine(lines[0]);
+  // Normalize empty or duplicated column headers
+  const seenCols = new Map<string, number>();
+  const columns = rawColumns.map((col, idx) => {
+    const base = col.trim() || `Column ${idx + 1}`;
+    const count = seenCols.get(base) || 0;
+    seenCols.set(base, count + 1);
+    return count === 0 ? base : `${base} (${count + 1})`;
+  });
+
   const rows: RawRow[] = [];
 
   for (let i = 1; i < lines.length; i++) {
     const vals = splitLine(lines[i]);
     const row: RawRow = {};
     columns.forEach((col, idx) => {
-      row[col] = vals[idx] || '';
+      row[col] = vals[idx] !== undefined ? vals[idx] : '';
     });
-    rows.push(row);
+    // Only include if at least one cell has content
+    if (Object.values(row).some((v) => v && v.trim() !== '')) {
+      rows.push(row);
+    }
   }
 
   return { columns, rows };

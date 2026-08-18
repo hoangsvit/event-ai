@@ -71,6 +71,12 @@ export const translations = {
     confirmDeleteSource: 'Are you sure you want to delete this dataset? This will remove all associated records.',
     sourceDeleted: 'Data source removed successfully.',
     uploadSuccess: 'CSV file uploaded and connected successfully.',
+    pasteCsvContent: 'Paste CSV Content',
+    pasteCsvSubtitle: 'Paste raw CSV rows or table text directly into the box below',
+    pasteCsvPlaceholder: 'e.g.\nFull Name, Company, Email, Job Title, Event\nNguyen Van A, FPT Software, a.nguyen@fpt.com, Tech Lead, AI Summit 2026\nTran Thi B, VNG Corporation, b.tran@vng.com.vn, Product Manager, Cloud Day 2026',
+    importCsvText: 'Import CSV Data',
+    csvTabUpload: 'Upload File',
+    csvTabPaste: 'Paste Raw CSV',
 
     // AI Normalize
     normalizeTitle: 'AI Schema Normalization & Alignment',
@@ -251,6 +257,12 @@ export const translations = {
     confirmDeleteSource: 'Bạn có chắc chắn muốn xóa nguồn dữ liệu này? Toàn bộ bản ghi liên quan sẽ bị xóa.',
     sourceDeleted: 'Đã xóa nguồn dữ liệu thành công.',
     uploadSuccess: 'Đã tải lên và kết nối file CSV thành công.',
+    pasteCsvContent: 'Dán nội dung CSV',
+    pasteCsvSubtitle: 'Dán trực tiếp văn bản định dạng CSV hoặc bảng dữ liệu vào ô bên dưới',
+    pasteCsvPlaceholder: 'Ví dụ:\nHọ và tên, Đơn vị công tác, Email, Chức vụ, Sự kiện\nNguyễn Văn A, FPT Software, a.nguyen@fpt.com, Trưởng nhóm KT, AI Summit 2026\nTrần Thị B, Tập đoàn VNG, b.tran@vng.com.vn, Quản lý sản phẩm, Cloud Day 2026',
+    importCsvText: 'Nhập dữ liệu CSV',
+    csvTabUpload: 'Tải tệp CSV',
+    csvTabPaste: 'Dán trực tiếp CSV',
 
     // AI Normalize
     normalizeTitle: 'AI Chuẩn hóa & Căn chỉnh Schema',
